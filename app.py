@@ -4,7 +4,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 import requests
 import re
 import os
-import threading
+import asyncio
 
 app = Flask(__name__)
 
@@ -12,6 +12,7 @@ app = Flask(__name__)
 api_id = "25316442"
 api_hash = "39b99470938f7b377f1928c10f848944"
 bot_token = "6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ"
+
 
 bot = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
@@ -36,7 +37,7 @@ def get_url(vid_url):
         return None
 
 @bot.on_message(filters.text)
-def handle_text(client, message):
+async def handle_text(client, message):
     chat_id = message.chat.id
     text = message.text
     nama = message.from_user.first_name
@@ -48,11 +49,11 @@ def handle_text(client, message):
                      InlineKeyboardButton("Dev", url='https://t.me/MzCoder')],
                     [InlineKeyboardButton("Update Channel", url='https://t.me/DutabotID')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        bot.send_message(chat_id, f"Halo! {nama}, Saya adalah bot yang siap membantu Anda mendownload media dari Facebook. Silakan kirim tautan Facebook yang ingin Anda unduh, dan saya akan segera memulai proses pengunduhan.", reply_markup=reply_markup, parse_mode='html')
+        await bot.send_message(chat_id, f"Halo! {nama}, Saya adalah bot yang siap membantu Anda mendownload media dari Facebook. Silakan kirim tautan Facebook yang ingin Anda unduh, dan saya akan segera memulai proses pengunduhan.", reply_markup=reply_markup, parse_mode='html')
 
     elif "facebook.com" in text or "fb.me" in text:
         urlfb = text.strip()
-        bot.send_message(chat_id, "Mengirim File Harap Tunggu.!!")
+        await bot.send_message(chat_id, "Mengirim File Harap Tunggu.!!")
 
         download_link = get_url(urlfb)
 
@@ -66,24 +67,26 @@ def handle_text(client, message):
                 video_file.write(video_response.content)
 
             # Kirim video ke Telegram
-            bot.send_video(chat_id, video_filename)
+            await bot.send_video(chat_id, video_filename)
 
             # Hapus video setelah diupload
             os.remove(video_filename)
 
         else:
-            bot.send_message(chat_id, "⚠️ Ada Yang Salah atau tidak dapat mengunduh video.")
+            await bot.send_message(chat_id, "⚠️ Ada Yang Salah atau tidak dapat mengunduh video.")
 
     else:
-        bot.send_message(chat_id, "Silakan kirim tautan Facebook yang valid.")
+        await bot.send_message(chat_id, "Silakan kirim tautan Facebook yang valid.")
 
-# Fungsi untuk menjalankan bot di thread terpisah
-def run_bot():
-    bot.run()
+async def run_bot():
+    await bot.start()
+    await bot.idle()  # Menunggu sampai bot dihentikan
 
 if __name__ == '__main__':
-    # Jalankan bot di thread terpisah
-    threading.Thread(target=run_bot).start()
-    
+    loop = asyncio.get_event_loop()
+
+    # Jalankan bot di event loop utama
+    loop.create_task(run_bot())
+
     # Jalankan aplikasi Flask
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8000)))
