@@ -11,7 +11,7 @@ import threading
 app = Flask(__name__)
 
 # Inisialisasi bot Telegram
-api_id = "25316442"  # Ganti dengan API ID Anda
+api_id = 25316442  # Ganti dengan API ID Anda
 api_hash = "39b99470938f7b377f1928c10f848944"  # Ganti dengan API Hash Anda
 bot_token = "6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ"  # Ganti dengan Token Bot Anda
 
@@ -37,6 +37,11 @@ def get_url(vid_url):
     except Exception as e:
         print(f"😴 Gagal mengambil data url: {e}")
         return None
+
+@bot.on_message(filters.command("ping"))
+async def ping_command(client, message):
+    chat_id = message.chat.id
+    await bot.send_message(chat_id, "Pong!")
 
 @bot.on_message(filters.text)
 async def handle_text(client, message):
