@@ -103,18 +103,22 @@ async def run_bot():
     logger.info("userbots initializing✓")
     logger.info("idling...")
 
-    # Loop untuk mendengarkan pesan
-    while True:
-        await asyncio.sleep(1)  # Menghindari penggunaan CPU yang tinggi
-
+    
 def start_flask():
     print("Starting Flask app on port 8000...")
     app.run(host='0.0.0.0', port=8000)
 
 if __name__ == '__main__':
+
+    loop = asyncio.get_event_loop()
+    
     # Menjalankan Flask di thread terpisah
     flask_thread = threading.Thread(target=start_flask)
     flask_thread.start()
 
-    # Menjalankan bot
-    asyncio.run(run_bot())
+    loop.run_until_complete(run_bot())
+    
+    # Tunggu hingga thread Flask selesai sebelum keluar
+    flask_thread.join()
+
+    
