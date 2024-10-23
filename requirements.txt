@@ -1,6 +1,5 @@
-     Flask
-     Pyrogram
-     requests
-     TgCrypto
-     gunicorn
-     
+Flask
+Pyrogram
+requests
+TgCrypto
+gunicorn
