@@ -38,10 +38,6 @@ def get_url(vid_url):
         print(f"😴 Gagal mengambil data url: {e}")
         return None
 
-@bot.on_message(filters.command("ping"))
-async def ping_command(client, message):
-    chat_id = message.chat.id
-    await bot.send_message(chat_id, "Pong!")
 
 @bot.on_message(filters.text)
 async def handle_text(client, message):
