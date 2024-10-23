@@ -2,4 +2,4 @@ Flask
 Pyrogram
 requests
 TgCrypto
-gunicorn
+
