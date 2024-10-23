@@ -9,11 +9,9 @@ import asyncio
 app = Flask(__name__)
 
 # Inisialisasi bot Telegram
-# Inisialisasi bot Telegram
-api_id = "25316442"  # Harus dalam tanda kutip
-api_hash = "39b99470938f7b377f1928c10f848944"  # Harus dalam tanda kutip
-bot_token = "6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ"  # Harus dalam tanda kutip
-
+api_id = "25316442"  # Ganti dengan API ID Anda
+api_hash = "39b99470938f7b377f1928c10f848944"  # Ganti dengan API Hash Anda
+bot_token = "6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ"  # Ganti dengan Token Bot Anda
 
 bot = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
@@ -81,6 +79,10 @@ async def handle_text(client, message):
 
     else:
         await bot.send_message(chat_id, "Silakan kirim tautan Facebook yang valid.")
+
+@app.route("/", methods=["GET"])
+def ping():
+    return "Bot is running!", 200
 
 async def run_bot():
     await bot.start()
