@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, request
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -5,6 +6,8 @@ import requests
 import re
 import os
 import asyncio
+
+
 
 app = Flask(__name__)
 
@@ -85,9 +88,23 @@ def ping():
     return "Bot is running!", 200
 
 async def run_bot():
+    logging.basicConfig(
+        level=logging.WARNING,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    )
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logger.info("initializing userbots...")
     await bot.start()
-    await bot.idle()  # Menunggu sampai bot dihentikan
+    logger.info("userbots initializing✓")
+    logger.info("idling...")
+    await bot.idle()  # Menunggu hingga bot dihentikan
+    logger.info("stopping bots...")
+    await bot.stop()
+    logger.info("bot stopped!")
 
+    
+    
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
 
