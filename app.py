@@ -16,7 +16,7 @@ api_id = "25316442"  # Ganti dengan API ID Anda
 api_hash = "39b99470938f7b377f1928c10f848944"  # Ganti dengan API Hash Anda
 bot_token = "6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ"  # Ganti dengan Token Bot Anda
 
-bot = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 def get_url(vid_url):
     try:
@@ -109,7 +109,8 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
 
     # Jalankan bot di event loop utama
-    loop.create_task(run_bot())
+    
+    loop.run_until_complete(run_bot())
 
     # Jalankan aplikasi Flask
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8000)))
+    app.run(host='0.0.0.0', port=8000)
