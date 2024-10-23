@@ -9,10 +9,9 @@ import asyncio
 app = Flask(__name__)
 
 # Inisialisasi bot Telegram
-api_id = "25316442"
-api_hash = "39b99470938f7b377f1928c10f848944"
-bot_token = "6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ"
-
+api_id = 25316442
+api_hash = 39b99470938f7b377f1928c10f848944
+bot_token = 6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ
 
 bot = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
@@ -22,6 +21,7 @@ def get_url(vid_url):
         payload = {'url': vid_url}
         
         response = requests.post(base_url, data=payload)
+        print(f"Response status code: {response.status_code}")  # Log status kode
 
         if response.status_code == 200:
             response_data = response.json()
@@ -38,6 +38,7 @@ def get_url(vid_url):
 
 @bot.on_message(filters.text)
 async def handle_text(client, message):
+    print(f"Received message: {message.text}")  # Log pesan yang diterima
     chat_id = message.chat.id
     text = message.text
     nama = message.from_user.first_name
@@ -58,6 +59,7 @@ async def handle_text(client, message):
         download_link = get_url(urlfb)
 
         if download_link:
+            print(f"Download link: {download_link}")  # Log tautan unduhan
             # Unduh video
             video_response = requests.get(download_link)
             video_filename = "downloaded_video.mp4"
