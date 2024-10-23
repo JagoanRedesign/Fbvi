@@ -17,7 +17,7 @@ bot = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 def get_url(vid_url):
     try:
-        base_url = "https://facebook-video-downloader.fly.dev/deo.php"
+        base_url = "https://facebook-video-downloader.fly.dev/app/main.php"
         payload = {'url': vid_url}
         
         response = requests.post(base_url, data=payload)
@@ -86,4 +86,4 @@ if __name__ == '__main__':
     threading.Thread(target=run_bot).start()
     
     # Jalankan aplikasi Flask
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8000)))
