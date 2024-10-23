@@ -9,9 +9,11 @@ import asyncio
 app = Flask(__name__)
 
 # Inisialisasi bot Telegram
-api_id = 25316442
-api_hash = 39b99470938f7b377f1928c10f848944
-bot_token = 6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ
+# Inisialisasi bot Telegram
+api_id = "25316442"  # Harus dalam tanda kutip
+api_hash = "39b99470938f7b377f1928c10f848944"  # Harus dalam tanda kutip
+bot_token = "6513065243:AAG9pKG8ycUV3aHk-72oZ0_FrAWD7ed3tRQ"  # Harus dalam tanda kutip
+
 
 bot = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
