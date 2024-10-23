@@ -7,8 +7,6 @@ import re
 import os
 import asyncio
 
-
-
 app = Flask(__name__)
 
 # Inisialisasi bot Telegram
@@ -98,18 +96,15 @@ async def run_bot():
     await bot.start()
     logger.info("userbots initializing✓")
     logger.info("idling...")
-    await bot.idle()  # Menunggu hingga bot dihentikan
-    logger.info("stopping bots...")
-    await bot.stop()
-    logger.info("bot stopped!")
 
-    
-    
+    # Loop untuk mendengarkan pesan
+    while True:
+        await asyncio.sleep(1)  # Menghindari penggunaan CPU yang tinggi
+
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
 
     # Jalankan bot di event loop utama
-    
     loop.run_until_complete(run_bot())
 
     # Jalankan aplikasi Flask
